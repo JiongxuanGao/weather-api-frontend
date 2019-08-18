@@ -7,7 +7,11 @@
     <el-select
       v-model="currentCity"
       filterable
-      placeholder="Please choose your city"
+      allow-create
+      default-first-option
+      loading-text="Loading..."
+      no-match-text="No data found."
+      placeholder="Please choose your city."
       @change="queryWeatherInfo()"
       :loading="loading4Weather"
     >
@@ -89,6 +93,7 @@ export default {
       helloMsg: "",
       currentCity: "",
       weatherInfo: {
+        result: false,
         cityName: "",
         updatedTime: "",
         weather: "",
@@ -107,7 +112,7 @@ export default {
       this.loading4Salute = true;
       axios
         .get("/hello?name=Jiongxuan", {
-          timeout: 5000
+          timeout: 15000
         })
         .then(response => {
           this.helloMsg = response.data;
@@ -125,13 +130,17 @@ export default {
       if (this.currentCity) {
         axios
           .get("/weather?city=" + this.currentCity, {
-            timeout: 5000
+            timeout: 15000
           })
           .then(response => {
             this.weatherInfo = response.data;
-            this.weatherInfo.temperature += "°C";
-            this.weatherInfo.windSpeed += "km/h";
             console.log(response.data);
+            if (this.weatherInfo.result) {
+              this.weatherInfo.temperature += "°C";
+              this.weatherInfo.windSpeed += "km/h";
+            } else {
+              this.resetWeatherInfo();
+            }
           })
           .catch(error => {
             console.log(error);
@@ -146,11 +155,12 @@ export default {
     },
 
     resetWeatherInfo() {
-      this.weatherInfo.cityName = "";
-      this.weatherInfo.updatedTime = "";
-      this.weatherInfo.weather = "";
-      this.weatherInfo.temperature = "";
-      this.weatherInfo.windSpeed = "";
+      this.weatherInfo.result = false;
+      this.weatherInfo.cityName = this.currentCity;
+      this.weatherInfo.updatedTime = "-";
+      this.weatherInfo.weather = "-";
+      this.weatherInfo.temperature = "-";
+      this.weatherInfo.windSpeed = "-";
     }
   }
 };
@@ -158,10 +168,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
 .el-row {
   margin-bottom: 5px;
   &:last-child {

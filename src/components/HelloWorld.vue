@@ -2,7 +2,7 @@
   <div class="hello">
     <h1>{{ helloMsg }} {{ msg }}</h1>
     <el-divider />
-    <el-button type="primary" @click="hello()" :loading="loading4Salute">Say Hi!</el-button>
+    <el-button type="primary" @click="hello()" :loading="loading4Salute">Say Hi</el-button>
     <el-divider />
     <el-select
       v-model="currentCity"

@@ -1,2 +1,2 @@
 #!/bin/bash
-kill $(ps aux | grep '[s]erve' | awk '{print $2}')
+for pid in $(ps -ef | grep '[s]erve' | awk '{print $2}'); do kill -9 $pid; done

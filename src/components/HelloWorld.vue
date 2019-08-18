@@ -1,8 +1,8 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
+    <h1>{{ helloMsg }} {{ msg }}</h1>
     <el-divider />
-    <el-button type="primary" @click="hello()">Say Hi!</el-button>
+    <el-button type="primary" @click="hello()" :loading="loading">Say Hi!</el-button>
     <el-divider />
     <el-select v-model="currentCity" filterable placeholder="Please choose your city">
       <el-option v-for="item in cities" :key="item.value" :label="item.label" :value="item.value"></el-option>
@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "HelloWorld",
   props: {
@@ -82,20 +83,27 @@ export default {
       currentCity: ""
     };
   },
+  mounted() {
+    axios.defaults.timeout = 1000;
+    axios.defaults.baseURL = "http://3.15.198.18:8081";
+  },
   methods: {
     hello() {
-      // axios
-      //   .get('http://3.15.198.18:8081/hello?name=Jiongxuan')
-      //   .then(response => {
-      //     this.helloMsg = response.data;
-      //     console.log(response.data);
-      //     console.log(helloMsg);
-      //   })
-      //   .catch(error => {
-      //     console.log(error)
-      //     this.errored = true
-      //   })
-      //   .finally(() => this.loading = false)
+      this.loading = true;
+      axios
+        .get("/hello?name=Jiongxuan", {
+          timeout: 5000
+        })
+        .then(response => {
+          this.helloMsg = response.data;
+          console.log(response.data);
+          console.log(this.helloMsg);
+        })
+        .catch(error => {
+          console.log(error);
+          this.errored = true;
+        })
+        .finally(() => (this.loading = false));
     },
     queryWeatherInfo() {
       // TODO

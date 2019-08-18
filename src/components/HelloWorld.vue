@@ -112,7 +112,7 @@ export default {
       this.loading4Salute = true;
       axios
         .get("/hello?name=Jiongxuan", {
-          timeout: 15000
+          timeout: 30000
         })
         .then(response => {
           this.helloMsg = response.data;
@@ -130,7 +130,7 @@ export default {
       if (this.currentCity) {
         axios
           .get("/weather?city=" + this.currentCity, {
-            timeout: 15000
+            timeout: 30000
           })
           .then(response => {
             this.weatherInfo = response.data;

@@ -94,11 +94,11 @@ export default {
       currentCity: "",
       weatherInfo: {
         result: false,
-        cityName: "",
-        updatedTime: "",
-        weather: "",
-        temperature: "",
-        windSpeed: ""
+        cityName: "-",
+        updatedTime: "-",
+        weather: "-",
+        temperature: "-",
+        windSpeed: "-"
       }
     };
   },
@@ -168,17 +168,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.el-row {
-  margin-bottom: 5px;
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-.el-col {
-  text-align: center;
-  border-radius: 4px;
-  margin-right: 4px;
-}
 .bg-purple {
   background: #d3dce6;
 }
@@ -187,9 +176,13 @@ export default {
 }
 .grid-content {
   border-radius: 4px;
-  min-height: 36px;
   text-align: left;
-  line-height: 36px;
-  padding-left: 5px;
+  padding: 8px;
+}
+[class*="el-col-"]{
+  float: none !important;
+  display: inline-block;
+  margin-right: 3px;
+  margin-bottom: 3px;
 }
 </style>
